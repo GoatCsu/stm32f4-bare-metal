@@ -37,7 +37,7 @@ CFLAGS += -Wconversion # neg int const implicitly converted to uint
 CFLAGS += -fsingle-precision-constant
 CFLAGS += -fomit-frame-pointer # do not use fp if not needed
 CFLAGS += -ffunction-sections -fdata-sections
-CFLAGS += --specs=nano.specs
+CFLAGS += --specs=nosys.specs
 
 # Chooses the relevant FPU option
 #CFLAGS += -mfloat-abi=soft # No FP
@@ -52,7 +52,6 @@ LDFLAGS += -mcpu=cortex-m4 -mthumb # processor setup
 #LDFLAGS += -nodefaultlibs # dont use standard libraries
 #LDFLAGS += -nostdlib # dont use startup or default libs
 LDFLAGS += --specs=nosys.specs
-LDFLAGS += --specs=nano.specs
 #LDFLAGS += --specs=rdimon.specs
 LDFLAGS += -Wl,--gc-sections # linker garbage collector
 LDFLAGS += -Wl,-Map=$(OBJDIR)/$(TARGET).map #generate map file
@@ -62,7 +61,13 @@ LDFLAGS += $(LIBINCLUDES)
 LDFLAGS += $(LIBS)
 LDFLAGS += -lc
 
-CROSS_COMPILE = arm-none-eabi-
+# Prefer the official Arm GNU Toolchain package location on macOS when present.
+ARM_GNU_GCC ?= $(firstword $(wildcard /Applications/ArmGNUToolchain/*/arm-none-eabi/bin/arm-none-eabi-gcc))
+ifeq ($(ARM_GNU_GCC),)
+CROSS_COMPILE ?= arm-none-eabi-
+else
+CROSS_COMPILE ?= $(patsubst %gcc,%,$(ARM_GNU_GCC))
+endif
 CC = $(CROSS_COMPILE)gcc
 LD = $(CROSS_COMPILE)ld
 OBJDUMP = $(CROSS_COMPILE)objdump
