@@ -5,14 +5,15 @@
 - 课程名称：嵌入式课程作业
 - 专业班级：计算机科学与技术 2403
 - 学号：8208241315
-- 项目名称：stm32f4-bare-metal
+- 项目名称：`stm32f4-bare-metal`
+- 开源仓库地址：<https://github.com/GoatCsu/stm32f4-bare-metal>
 
-## 二、作业目标
+## 二、实验目的
 
-本次作业主要完成以下两项任务：
-
-1. 在 GitHub 或 Gitee 等平台创建一个公开开源仓库，选择合适的开源协议，并使用 Git 工具完成不少于两次提交。
-2. 在 macOS 环境下配置 `arm-none-eabi-gcc` 嵌入式交叉编译环境，编译 STM32F4 裸机项目并生成固件文件。
+1. 学习在 GitHub 平台创建公开开源仓库，并了解开源协议的基本使用方法。
+2. 掌握 Git 的基本操作流程，完成项目的版本管理与多次提交。
+3. 在 macOS 环境下配置 `arm-none-eabi-gcc` 交叉编译环境。
+4. 完成 STM32F4 裸机工程的编译，生成可用的固件文件。
 
 ## 三、实验环境
 
@@ -24,61 +25,53 @@
 - 开源项目：`stm32f4-bare-metal`
 - 参考源码仓库：<https://github.com/fcayci/stm32f4-bare-metal>
 
-工具链版本输出见：
+工具链版本信息见 [`toolchain-version.txt`](toolchain-version.txt)。
 
-- `toolchain-version.txt`
+## 四、实验内容与过程
 
-## 四、开源仓库创建与 Git 提交
+### 4.1 创建开源仓库并选择开源协议
 
-### 4.1 创建公开仓库
+本次作业使用 GitHub 创建公开仓库，并以 `stm32f4-bare-metal` 作为仓库名称进行管理。仓库为公开状态，可满足课程对开源仓库的要求。
 
-在 GitHub 或 Gitee 上创建一个公开仓库，仓库可命名为 `embedded-lab-demo` 或与作业题目相关的名称，并选择 MIT License 作为开源协议。
+本项目使用的开源协议为 MIT License。MIT 协议内容简洁，允许他人在保留版权声明的前提下自由使用、修改和分发代码，适合作为课程实验项目的开源协议。
 
-本项目建议在报告中写明：
+图 1 为本次作业仓库主页截图，图中可见仓库公开状态以及根目录中的 `LICENSE` 文件。
 
-> 本项目采用 MIT 开源协议，允许他人自由使用、修改与分发代码。
+![图1 仓库主页与开源项目信息](screenshots/04-repository-home.png)
 
-需要在此处补充你自己的仓库链接：
+### 4.2 Git 提交与版本管理
 
-- 仓库链接：<https://github.com/GoatCsu/stm32f4-bare-metal>
+在仓库创建完成后，使用 Git 对项目进行版本管理，并完成了不少于两次的提交操作。第一次提交用于初始化项目内容，后续提交用于补充实验内容和作业文件。
 
-### 4.2 Git 提交记录
+图 2 展示了使用图形化界面进行提交操作的过程。图 3 展示了仓库的提交历史记录，可以证明本次作业完成了多次版本提交。
 
-本次作业要求至少完成两次提交。当前已有截图可以作为提交过程与历史记录的证明：
+![图2 Git 提交操作](screenshots/01-git-commit-operation.png)
 
-- `screenshots/01-git-commit-operation.png`
-- `screenshots/02-git-history.png`
+![图3 Git 提交历史](screenshots/02-git-history.png)
 
-建议在你自己的公开仓库中至少保留如下两次提交：
+### 4.3 交叉编译环境配置
 
-1. 初始提交，例如 `init project`
-2. 更新提交，例如 `add report and build files`
+本次实验在 macOS 环境下完成 ARM 裸机开发工具链配置。开始阶段，终端默认命中的 `arm-none-eabi-gcc` 工具链存在 `specs` 文件缺失的问题，因此无法直接完成构建。
 
-## 五、交叉编译环境配置
+图 4 为早期工具链配置异常时的报错截图。通过后续排查，最终改为使用官方安装的 Arm GNU Toolchain，并将工程构建配置调整为更适合裸机环境的 `nosys.specs`。
 
-本次作业在 macOS 下完成。最初使用其他路径下的 `arm-none-eabi-gcc` 时出现了 `specs` 文件缺失的问题，因此改为使用官方安装的 Arm GNU Toolchain。
+![图4 工具链排错过程](screenshots/03-toolchain-error.png)
 
-官方工具链安装位置为：
+官方工具链实际使用路径如下：
 
 ```text
 /Applications/ArmGNUToolchain/15.2.rel1/arm-none-eabi/bin/arm-none-eabi-gcc
 ```
 
-在配置过程中，曾出现旧工具链导致的报错，该排错截图已保留：
+图 5 为最终工具链版本输出截图，可证明 `arm-none-eabi-gcc` 已在本机正确安装并可正常调用。
 
-- `screenshots/03-toolchain-error.png`
+![图5 工具链版本信息](screenshots/07-toolchain-version.png)
 
-最终可正常使用的编译器版本信息见：
+### 4.4 编译 STM32F4 裸机工程
 
-- `toolchain-version.txt`
+本次作业选用的开源项目为 `stm32f4-bare-metal`。该项目基于 STM32F4 系列单片机，采用裸机开发方式，不依赖 HAL 库，具有较强的教学意义。
 
-## 六、项目编译过程
-
-本次选用的开源项目为 STM32F4 裸机工程 `stm32f4-bare-metal`。该项目不依赖 HAL 库，直接进行底层寄存器级开发，适合作为嵌入式课程作业示例。
-
-### 6.1 编译命令
-
-在项目目录下进入 `blinky` 示例工程并执行：
+编译时进入 `projects/blinky` 目录，执行如下命令：
 
 ```bash
 cd projects/blinky
@@ -86,13 +79,7 @@ make clean
 make
 ```
 
-### 6.2 环境问题处理
-
-编译过程中发现原始构建配置依赖 `nano.specs`，而当前环境下更适合使用 `nosys.specs`。因此对工程构建文件进行了调整，使其更适配裸机开发环境，并优先识别 macOS 下官方安装的 Arm GNU Toolchain。
-
-### 6.3 编译结果
-
-编译成功后，终端输出如下关键信息：
+在编译过程中，工程调用了 ARM 交叉编译工具链完成源文件编译、链接及二进制导出。编译成功后，终端给出构建结果：
 
 ```text
 text = 1164
@@ -103,47 +90,48 @@ hex  = c50
 Successfully finished...
 ```
 
-完整构建日志见：
+图 6 为本次工程成功编译时的终端输出截图。
 
-- `build-log.txt`
+![图6 工程编译成功输出](screenshots/06-build-success.png)
 
-## 七、生成的固件文件
+完整编译日志见 [`build-log.txt`](build-log.txt)。
 
-编译成功后生成的主要文件已整理至 `artifacts/` 目录，包括：
+### 4.5 编译产物整理
 
-- `artifacts/blinky.elf`
-- `artifacts/blinky.bin`
-- `artifacts/blinky.map`
-- `artifacts/blinky.lst`
+为了便于作业提交，本次实验将关键编译产物统一整理到 `homework/artifacts` 目录中，主要包括：
 
-其中：
+- `blinky.elf`
+- `blinky.bin`
+- `blinky.map`
+- `blinky.lst`
 
-- `blinky.elf` 为可执行固件文件
-- `blinky.bin` 为可烧录的二进制固件文件
-- `blinky.map` 为链接映射文件
-- `blinky.lst` 为反汇编与列表文件
+其中，`blinky.elf` 为可执行固件文件，`blinky.bin` 为二进制固件文件，`blinky.map` 为链接映射文件，`blinky.lst` 为反汇编列表文件。
 
-文件清单与大小见：
+图 7 为 `artifacts` 目录截图。
 
-- `artifacts-list.txt`
+![图7 编译产物目录](screenshots/05-artifacts-directory.png)
 
-## 八、实验结果分析
+文件清单见 [`artifacts-list.txt`](artifacts-list.txt)，生成文件位于 [`artifacts`](artifacts/) 目录。
 
-本次作业完成了从开源项目获取、工具链配置、问题排查到固件编译输出的完整流程，说明当前 macOS 环境已经具备 STM32F4 裸机项目的基本交叉编译能力。
+## 五、实验结果
 
-通过本次实验可以看出：
+本次实验成功完成了以下任务：
 
-1. `arm-none-eabi-gcc` 是 ARM 裸机开发的核心工具链。
-2. 裸机工程通常不依赖操作系统，因此 `nosys.specs` 更适合当前工程构建。
-3. STM32F4 裸机项目能够成功生成 `.elf` 与 `.bin` 文件，说明交叉编译环境配置正确。
+1. 在 GitHub 创建了公开开源仓库，并给出了仓库链接。
+2. 选择了 MIT 开源协议作为项目许可证。
+3. 使用 Git 完成了不少于两次的版本提交。
+4. 在 macOS 环境下成功配置了 `arm-none-eabi-gcc` 交叉编译工具链。
+5. 成功编译 `stm32f4-bare-metal` 项目的 `blinky` 示例工程。
+6. 生成了 `.elf`、`.bin`、`.map`、`.lst` 等关键构建文件。
 
-## 九、总结
+## 六、实验分析
 
-本次作业成功完成了以下内容：
+通过本次实验可以看出，嵌入式项目的关键在于交叉编译环境是否配置正确。对于 STM32F4 这类 ARM Cortex-M 系列微控制器，必须使用 `arm-none-eabi-gcc` 等专用工具链，而不能直接使用系统默认的桌面编译器。
 
-1. 选择并使用开源 STM32F4 裸机项目作为实验对象。
-2. 在 macOS 环境下配置 ARM 嵌入式交叉编译工具链。
-3. 成功编译 `blinky` 示例并生成固件文件。
-4. 整理了提交过程截图、工具链版本信息、编译日志和编译产物。
+本次实验在实际操作中经历了工具链报错、编译参数调整和构建环境修正等过程，最终完成了工程编译。这说明 macOS 平台同样可以满足 ARM 裸机开发的基本需求，只要工具链版本和工程配置匹配，就能够顺利生成固件文件。
 
-本次实验不仅加深了对 ARM 交叉编译流程的理解，也提高了对嵌入式构建环境问题的定位与处理能力。
+## 七、实验总结
+
+本次嵌入式课程作业围绕“开源仓库创建”和“ARM 交叉编译环境配置”两个核心目标展开。通过本次实践，我掌握了 GitHub 开源仓库的创建方法、MIT 开源协议的基本使用方式、Git 提交流程，以及基于 `arm-none-eabi-gcc` 的 STM32F4 裸机工程编译方法。
+
+最终，项目成功生成了可用的固件文件，验证了交叉编译环境配置的正确性，也加深了我对嵌入式开发流程和 ARM 裸机工程结构的理解。
