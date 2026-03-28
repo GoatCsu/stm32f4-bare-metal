@@ -1,3 +1,5 @@
+### 嵌入式课程作业
+计算机科学与技术2403 *特
 # stm32f4-bare-metal
 
 Bare metal STM32F4 examples to serve as starting points for projects. Educational purposes.
